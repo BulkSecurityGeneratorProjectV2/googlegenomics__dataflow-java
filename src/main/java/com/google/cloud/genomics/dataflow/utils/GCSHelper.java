@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigInteger;
+import java.nio.file.Files;
 import java.security.GeneralSecurityException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -196,7 +197,7 @@ public class GCSHelper {
    */
   public File getAsFile(String bucket, String fname) throws IOException {
     Storage.Objects.Get request = storage.objects().get(bucket, fname);
-    File file = File.createTempFile("gcsdownload", "obj");
+    File file = Files.createTempFile("gcsdownload", "obj").toFile();
     try (OutputStream out = new FileOutputStream(file)) {
       request.executeMediaAndDownloadTo(out);
     }
